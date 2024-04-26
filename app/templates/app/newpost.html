@@ -1,0 +1,41 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новая статья блога</title>
+</head>
+<body>
+    <h1>Новая статья блога</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="fieldWrapper">
+            {{ form.title.errors }}
+            <label for="{{ form.title.id_for_label }}">Заголовок:</label>
+            {{ form.title }}
+        </div>
+        
+        <div class="fieldWrapper">
+            {{ form.description.errors }}
+            <label for="{{ form.description.id_for_label }}">Краткое содержание:</label>
+            {{ form.description }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.content.errors }}
+            <label for="{{ form.content.id_for_label }}">Полное содержание:</label>
+            {{ form.content }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.image.errors }}
+            <label for="{{ form.image.id_for_label }}">Выберите изображение:</label>
+            {{ form.image }}
+        </div>
+        <button type="submit" >Создать статью</button>
+    </form>
+</body>
+</html>
+{% endblock %}
