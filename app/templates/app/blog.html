@@ -1,0 +1,20 @@
+{% extends "app/layout.html" %}
+{% block content %}
+
+
+<h2>{{ title }}</h2>
+<br />
+<hr />
+<div class="grid-container">
+    {% for post in posts %}
+    <div class="grid-item">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.description }}</p>
+        <p><a style="color:cyan" class="badge badge-dark" href="{% url 'blogpost' parametr=post.id %}">Читать далее</a></p>
+        <h4>{{ post.posted }}</h4>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
