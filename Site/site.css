@@ -1,0 +1,43 @@
+﻿header {
+    background-color: #ff0000;
+    color: #333;
+    padding: 50px 0;
+    text-align: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: auto;
+    padding: 0;
+    background-color: #0094ff;
+    color:#333
+}
+
+h1 {
+    margin: auto;
+}
+
+.container {
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+p {
+    line-height: 1.5;
+    font-size: 18px;
+}
+
+li {
+    font-size: 16px;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+a {
+    color: greenyellow;
+}

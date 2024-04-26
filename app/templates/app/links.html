@@ -1,0 +1,22 @@
+{% extends "app/layout.html" %}
+{% load static %}
+
+{% block content %}
+
+<h2> {{ title }}. </h2>
+<h3> {{ message }} </h3>
+<br />
+<a href="https://auto.ru/" target="_blank"> 
+    <img class="logo1" src="{% static 'app/content/auto_logo.png' %}" alt="Logo 1" />
+</a>
+<br />
+
+<a href="https://avilon.ru/" target="_blank" > 
+    <img class="logo2" src="{% static 'app/content/avilon_logo.png' %}" alt="Logo 2" />
+</a>
+<br />
+<a class="link" href="https://www.lada.ru/" target="_blank"> 
+    <img class="logo3" src="{% static 'app/content/lada_logo.png' %}" alt="Logo 3" />
+</a>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+<address>
+    Фирма: AvtoSaleOn<br />
+    Улица Пушкина, дом Колотушкина<br />
+    <abbr title="Телефон">Т:</abbr>
+    8 (800) 555-35-35
+</address>
+
+<address>
+    <strong>Техподдержка:</strong>   <a href="mailto:Support@example.com">Support_auto@mail.ru</a><br />
+    <strong>Отдел маркетинга:</strong> <a href="mailto:Marketing@example.com">Marketing_auto@mail.ru</a>
+</address>
+
+{% endblock %}
