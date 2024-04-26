@@ -1,0 +1,97 @@
+body {
+    padding-top: 100px;
+    padding-bottom: 20px;
+    background-color: #077168;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+a {
+    color: black;
+}
+
+.logo3 {
+    width: 125px;
+    height: auto;
+    margin-left: 35px;
+}
+
+.logo2 {
+    width: 125px;
+    height: auto;
+    margin-left: 35px;
+}
+
+.logo1 {
+    width: 200px; 
+    height: auto; 
+    
+}
+
+.link {
+    margin-bottom: 40px;
+}
+
+p {
+    color: black;
+}
+
+label {
+    color: black;
+}
+
+address {
+    color: black;
+}
+
+h2 {
+    color: black;
+}
+
+h3 {
+    color: black;
+}
+
+span {
+    color: greenyellow;
+}
+
+li {
+    color: burlywood;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
