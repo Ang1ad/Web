@@ -1,1 +1,22 @@
 {% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+<h2>{{ title }}</h2>
+<br />
+<h3>{{ message }}</h3>
+<hr />
+<div class="grid-container">
+    <div class="grid-item">
+        <VIDEO controls="controls" poster="../../static/app/media/DVSZastavka.png" style="max-width: 100%;">
+            <source src="../../static/app/media/DVS.webm" type='video/webm'>
+            <source src="../../static/app/media/DVS.ogg" type='audio/ogg'>
+        </VIDEO>
+    </div>
+    <div class="grid-item">
+        <VIDEO controls="controls" poster="../../static/app/media/ScepaZastavka.png" style="max-width: 100%;">
+            <source src="../../static/app/media/Scepa.webm" type='video/webm'>
+            <source src="../../static/app/media/Scepa.ogg" type='audio/ogg'>
+        </VIDEO>
+    </div>
+</div>
+{% endblock %}

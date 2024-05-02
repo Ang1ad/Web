@@ -46,7 +46,7 @@
   <ItemGroup>
     <Folder Include="app\" />
     <Folder Include="app\migrations\" />
-    <Folder Include="app\media\" />
+    <Folder Include="app\static\app\media\" />
     <Folder Include="app\static\" />
     <Folder Include="app\static\app\" />
     <Folder Include="app\static\app\content\" />
@@ -62,10 +62,12 @@
     <Folder Include="Web\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\media\firefox_bXoM6liioV.png" />
-    <Content Include="app\media\firefox_T5B2glKJEI.png" />
-    <Content Include="app\media\Как работает двигатель внутреннего сгорания автомобиля .mp4" />
-    <Content Include="app\media\Как работает сцепление. Без воды и понятным языком.mp4" />
+    <Content Include="app\static\app\media\DVS.ogg" />
+    <Content Include="app\static\app\media\DVS.webm" />
+    <Content Include="app\static\app\media\DVSZastavka.png" />
+    <Content Include="app\static\app\media\Scepa.ogg" />
+    <Content Include="app\static\app\media\Scepa.webm" />
+    <Content Include="app\static\app\media\ScepaZastavka.png" />
     <Content Include="app\static\app\content\auto_logo.png" />
     <Content Include="app\static\app\content\avilon_logo.png" />
     <Content Include="app\static\app\content\cattouch.webp" />
