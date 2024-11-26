@@ -9,11 +9,43 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Информация о профиле</h4>
+                    {% if user_profile.avatar %}
+                    <img src="{{ user_profile.avatar.url }}" alt="Аватар" class="img-thumbnail" style="width: 150px; height: 150px;">
+                    {% else %}
+                    <p>Аватар не загружен</p>
+                    {% endif %}
                     <p class="card-text">Логин: {{ user.username }}</p>
                     <p class="card-text">Имя: {{ user.first_name }} {{ user.last_name }}</p>
                     <p class="card-text">Email: {{ user.email }}</p>
-                    <a href="" class="btn btn-primary">Редактировать профиль</a>
-                    <a href="" class="btn btn-primary">Сменить пароль</a>
+                    <a href="{% url 'add_avatar' %}" class="btn btn-primary">Редактировать профиль</a>
+                    <a href="{% url 'change_password' %}" class="btn btn-primary">Сменить пароль</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">История заказов</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Дата создания</th>
+                                <th>Услуга</th>
+                                <th>Статус</th>
+                                <th>Стоимость</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td>{{ order.created_at }}</td>
+                                <td>{{ order.service }}</td>
+                                <td>{{ order.get_status_display }}</td>
+                                <td>{{ order.cost }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

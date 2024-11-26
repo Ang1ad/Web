@@ -1,17 +1,15 @@
 ﻿import re
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from django.shortcuts import render, redirect
-from .forms import AnketaForm  
+from django.contrib.auth import update_session_auth_hash
+from .forms import AnketaForm, CustomPasswordChangeForm, AvatarForm, CommentForm,  BlogForm, CustomUserCreationForm
 from django.db import models
-from .models import Blog
-from .models import Comment
-from .forms import CommentForm
+from .models import Blog, Order, UserProfile, Comment
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
-from app.forms import AnketaForm
-from app.forms import BlogForm
-from app.forms import CustomUserCreationForm
+
 
 def home(request):
     """Renders the home page."""
@@ -207,11 +205,43 @@ def about(request):
 
 def cabinet(request):
     assert isinstance(request, HttpRequest)
+    orders = Order.objects.filter(user=request.user)
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     return render(
         request,
         'app/cabinet.html',
         {
             'user': request.user,
+            'orders': orders,
+            'user_profile': user_profile,
             'year': datetime.now().year,
         }
     )
+
+def change_password(request):
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = CustomPasswordChangeForm(request.user)
+    return render(request, 'app/change_password.html', {'form': form})
+
+def add_avatar(request):
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your avatar was successfully updated!')
+            return redirect('add_avatar')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = AvatarForm(instance=user_profile)
+    return render(request, 'app/add_avatar.html', {'form': form})

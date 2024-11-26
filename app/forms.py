@@ -3,10 +3,10 @@ Definition of forms.
 """
 
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from .models import Comment 
+from .models import Comment, UserProfile 
 from .models import Blog
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import User
@@ -68,4 +68,16 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['old_password'].widget.attrs.update({'class': 'form-control'})
+        self.fields['new_password1'].widget.attrs.update({'class': 'form-control'})
+        self.fields['new_password2'].widget.attrs.update({'class': 'form-control'})
+
+class AvatarForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['avatar']
         

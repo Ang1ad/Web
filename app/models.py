@@ -8,8 +8,6 @@ from django.urls import reverse
 from datetime import datetime
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 class Blog(models.Model):
     title = models.CharField(max_length = 100, unique_for_date = "posted", verbose_name = "Заголовок")
     description = models.TextField(verbose_name = "Краткое содержание")
@@ -39,5 +37,29 @@ class Comment(models.Model):
         ordering = ["-date"]
         verbose_name = "комментарий"
         verbose_name_plural = "комментарии"
+        
+class Order(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+        ('canceled', 'Canceled'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    service = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    cost = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f'Order {self.id} by {self.user.username}'
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
         
 admin.site.register(Blog) 

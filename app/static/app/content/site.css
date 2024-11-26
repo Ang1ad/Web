@@ -73,7 +73,7 @@ label, address, h1, h2, h3 {
     text-align: center;
 }
 
-p, li, h4, span, a {
+p, li, h4, span, a, th {
     color: white;
 }
 
