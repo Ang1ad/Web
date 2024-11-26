@@ -1,15 +1,17 @@
-﻿from django.contrib.auth.forms import UserCreationForm
+﻿import re
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .forms import AnketaForm  
 from django.db import models
 from .models import Blog
-from .models import Comment # использование модели комментариев
-from .forms import CommentForm # использование формы ввода комментария
+from .models import Comment
+from .forms import CommentForm
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
 from app.forms import AnketaForm
 from app.forms import BlogForm
+from app.forms import CustomUserCreationForm
 
 def home(request):
     """Renders the home page."""
@@ -96,37 +98,37 @@ def anketa(request):
 
 def registration(request):
     assert isinstance(request, HttpRequest)
-    if request.method == "POST": # после отправки формы
-        regform = UserCreationForm(request.POST)    
-        if regform.is_valid(): #валидация полей формы
-            reg_f = regform.save(commit=False) # не сохраняем автоматически данные формы
-            reg_f.is_staff = False # запрещен вход в административный раздел
-            reg_f.is_active = True # активный пользователь
-            reg_f.is_superuser = False # не является суперпользователем
-            reg_f.date_joined = datetime.now() # дата регистрации
-            reg_f.last_login = datetime.now() # дата последней авторизации
-            reg_f.save() # сохраняем изменения после добавления данных
-        return redirect('home') # переадресация на главную страницу после регистрации
+    if request.method == "POST":  
+        regform = CustomUserCreationForm(request.POST)
+        if regform.is_valid(): 
+            reg_f = regform.save(commit=False)  
+            reg_f.is_staff = False
+            reg_f.is_active = True
+            reg_f.is_superuser = False
+            reg_f.date_joined = datetime.now()
+            reg_f.last_login = datetime.now()
+            reg_f.save() 
+            return redirect('home') 
     else:
-        regform = UserCreationForm() # создание объекта формы для ввода данных нового пользователя
+        regform = CustomUserCreationForm()  
     return render(
         request,
         'app/registration.html',
         {
-            'regform': regform, # передача формы в шаблон веб-страницы
-            'year':datetime.now().year,
+            'regform': regform, 
+            'year': datetime.now().year,
         }
     )
 
 def blog(request):
     assert isinstance(request, HttpRequest)
-    posts = Blog.objects.all() # запрос на выбор всех статей блога из модели
+    posts = Blog.objects.all()
     return render(
         request,
         'app/blog.html',
         {
             'title':'Блог',
-            'posts': posts, # передача списка статей в шаблон веб-страницы
+            'posts': posts,
             'year':datetime.now().year,
         }
 
@@ -134,26 +136,26 @@ def blog(request):
 
 def blogpost(request, parametr):
     assert isinstance(request, HttpRequest)
-    post_1 = Blog.objects.get(id=parametr) # запрос на выбор конкретной статьи по параметру
+    post_1 = Blog.objects.get(id=parametr)
     comments = Comment.objects.filter(post=post_1).order_by('-date')
-    if request.method == "POST": # после отправки данных формы на сервер методом POST
+    if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
             comment_f = form.save(commit=False)
-            comment_f.author = request.user # добавляем (так как этого поля нет в форме) в модель Комментария (Comment) в поле автор авторизованного пользователя
-            comment_f.date = datetime.now() # добавляем в модель Комментария (Comment) текущую дату
-            comment_f.post = post_1 # добавляем в модель Комментария (Comment) статью, для которой данный комментарий
-            comment_f.save() # сохраняем изменения после добавления полей
-            return redirect('blogpost', parametr=post_1.id) # переадресация на ту же страницу статьи после отправки комментария
+            comment_f.author = request.user 
+            comment_f.date = datetime.now() 
+            comment_f.post = post_1 
+            comment_f.save() 
+            return redirect('blogpost', parametr=post_1.id) 
     else:
-        form = CommentForm() # создание формы для ввода комментария
+        form = CommentForm()
     return render(
         request,
         'app/blogpost.html',
         {
-            'post_1': post_1, # передача конкретной статьи в шаблон веб-страницы
-            'comments': comments, # передача всех комментариев к данной статье в шаблон веб-страницы
-            'form': form, # передача формы добавления комментария в шаблон веб-страницы 
+            'post_1': post_1, 
+            'comments': comments, 
+            'form': form, 
             'year': datetime.now().year,
         }
     )
@@ -163,14 +165,20 @@ def newpost(request):
     if request.method == 'POST':
         form = BlogForm(request.POST, request.FILES)
         if form.is_valid():
-            # Сохраняем форму, чтобы создать новую статью блога
             new_blog = form.save(commit=False)
-            new_blog.author = request.user  # Устанавливаем текущего пользователя как автора статьи
+            new_blog.author = request.user  
             new_blog.save()
-            return redirect('blog')  # Перенаправляем пользователя на страницу блога после добавления статьи
+            return redirect('blog')
     else:
         form = BlogForm()
-    return render(request, 'app/newpost.html', {'form': form})
+    return render(
+        request,
+       'app/newpost.html',
+       {
+          'form': form, 
+          'year': datetime.now().year,
+       }
+     )
 
 def videopost(request):
     assert isinstance(request, HttpRequest)
@@ -180,7 +188,7 @@ def videopost(request):
         {
             'title':'Видео',
             'message':'Ролики по устройству автомобиля:',
-            'year':datetime.now().year,
+            'year': datetime.now().year,
         }
     )
         
@@ -193,7 +201,17 @@ def about(request):
         'app/about.html',
         {
             'title':'О нас',
-            'message':'Сведения о нас.',
-            'year':datetime.now().year,
+            'year': datetime.now().year,
+        }
+    )
+
+def cabinet(request):
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/cabinet.html',
+        {
+            'user': request.user,
+            'year': datetime.now().year,
         }
     )

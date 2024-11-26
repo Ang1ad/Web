@@ -2,15 +2,15 @@
 <form id="logoutForm" action="/logout/" method="post" class="navbar-right">
     {% csrf_token %}
     <ul class="nav navbar-nav navbar-right">
-        <li><span style="color: black" class="navbar-brand">Привет, {{ user.username }}!</span></li>
-        <li><a class="btn btn-default" style="color: white; background-color: #060042" href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+        <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'cabinet' %}">Личный кабинет</a></li>
+        <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
     </ul>
 </form>
 
 {% else %}
 
 <ul class="nav navbar-nav navbar-right">
-    <li><a class="btn btn-default" style="color: white; background-color: #060042" href="{% url 'login' %}">Авторизоваться</a></li>
+    <li><a class="btn btn-outline-ligh" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'login' %}">Авторизоваться</a></li>
 </ul>
 
 {% endif %}

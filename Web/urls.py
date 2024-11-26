@@ -35,7 +35,8 @@ urlpatterns = [
     path('blog/', views.blog, name='blog'),
     path('blogpost/<int:parametr>/', views.blogpost, name='blogpost'),
     path('newpost/', views.newpost, name='newpost'),
-    path('videopost/', views.videopost, name='videopost')
+    path('videopost/', views.videopost, name='videopost'),
+    path('cabinet/', views.cabinet, name='cabinet')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()

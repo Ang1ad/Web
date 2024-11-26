@@ -1,7 +1,7 @@
 body {
     padding-top: 10px;
     padding-bottom: 20px;
-    background-color: #077168;
+    background-color: #333333;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -16,13 +16,13 @@ body {
     padding: 0 20px;
 }
 
+.circle{
+    margin-top: 50px;
+}
+
 .carousel-inner .item img {
     max-width: 100%; /* ћаксимальна€ ширина изображени€ будет равна ширине контейнера */
     height: auto; /* »зображение будет подстраиватьс€ под высоту контейнера пропорционально */
-}
-
-h5 {
-    color: #272932;
 }
 
 .grid-container {
@@ -34,29 +34,17 @@ h5 {
 .grid-item {
     border: 1px solid #000000;
     padding: 20px;
-    background-color: #077168;
+    background-color: #333333;
 }
 
 .navbar {
-    background-color: #d3fe91;
-}
-
-h1 {
-    background: linear-gradient(to right, orange, yellow);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-align: center;
+    background-color: #333333;
 }
 
 header {
     background-color: #077168;
     padding: 50px 0;
     text-align: center;
-}
-
-a {
-    color: black;
 }
 
 .logo3 {
@@ -80,17 +68,13 @@ a {
     margin-bottom: 40px;
 }
 
-label, address, h2, h3 {
-    color: burlywood;
+label, address, h1, h2, h3 {
+    color: white;
     text-align: center;
 }
 
-p, li {
-    color: burlywood;
-}
-
-span {
-    color: greenyellow;
+p, li, h4, span, a {
+    color: white;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */

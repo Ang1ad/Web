@@ -1,20 +1,21 @@
 ﻿{% extends "app/layout.html" %}
 
 {% block content %}
-
 <h2>Регистрация пользователя</h2>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %} >{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}
 
 <form method="POST">
     {% csrf_token %}
-
     <div>
-
-        {{ regform.as_p}}
-
-        <button type="submit" class="save btn btn-default"> Зарегистрировать </button>
-
+        {{ regform.as_p }}
+        <button type="submit" class="save btn btn-outline-light" style="color: black; background-color: darkorange;">Зарегистрироваться</button>
     </div>
-
 </form>
-
 {% endblock %}
