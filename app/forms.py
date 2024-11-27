@@ -81,3 +81,12 @@ class AvatarForm(forms.ModelForm):
         model = UserProfile
         fields = ['avatar']
         
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['category', 'brand', 'model', 'generation', 'year', 'price', 'condition', 'image']
+
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['service_type', 'name', 'description', 'price']

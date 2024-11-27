@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import update_session_auth_hash
 from .forms import AnketaForm, CustomPasswordChangeForm, AvatarForm, CommentForm,  BlogForm, CustomUserCreationForm
 from django.db import models
-from .models import Blog, Category, Order, Product, UserProfile, Comment
+from .models import Blog, Category, Order, Product, Service, ServiceType, UserProfile, Comment
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
@@ -16,7 +16,7 @@ def home(request):
     assert isinstance(request, HttpRequest)
     return render(
         request,
-        'app/index.html',
+        'app/main.html',
         {
             'title':'Главная',
             'year':datetime.now().year,
@@ -283,3 +283,27 @@ def category_detail(request, category_id):
           'year': datetime.now().year,
        }
     )
+
+def catalog(request):
+    categories = Category.objects.all()
+    service_types = ServiceType.objects.all()
+    return render(request, 'app/catalog.html', {'categories': categories, 'service_types': service_types})
+
+def catalog_auto(request):
+    brands = [choice[0] for choice in Product.BRAND_CHOICES]
+    models = [choice[0] for choice in Product.MODEL_CHOICES]
+    generations = [choice[0] for choice in Product.GENERATION_CHOICES]
+    conditions = [choice[0] for choice in Product.CONDITION_CHOICES]
+    products = Product.objects.all()
+    return render(request, 'app/catalog_auto.html', {
+        'brands': brands,
+        'models': models,
+        'generations': generations,
+        'conditions': conditions,
+        'products': products
+    })
+
+def catalog_service(request, service_type_id):
+    service_type = get_object_or_404(ServiceType, id=service_type_id)
+    services = Service.objects.filter(service_type=service_type)
+    return render(request, 'app/catalog_service.html', {'service_type': service_type, 'services': services})
