@@ -93,6 +93,7 @@
                     <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'videopost' %}">Видео</a></li>
                     <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'anketa' %}">Отзыв</a></li>
                     <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'blog' %}">Блог</a></li>
+                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'catalog' %}">Каталог</a></li>
                     {% if request.user.is_superuser %}
                     <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'newpost' %}">Добавить статью блога</a></li>
                     {% endif %}

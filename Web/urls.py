@@ -39,6 +39,8 @@ urlpatterns = [
     path('cabinet/', views.cabinet, name='cabinet'),
     path('changepassword/', views.change_password, name='change_password'),
     path('addavatar/', views.add_avatar, name='add_avatar'),
+    path('catalog/', views.catalog, name='catalog'),
+    path('catalog/<int:category_id>/', views.category_detail, name='category_detail'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()

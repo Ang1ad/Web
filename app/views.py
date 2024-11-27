@@ -1,11 +1,11 @@
 ﻿import re
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import update_session_auth_hash
 from .forms import AnketaForm, CustomPasswordChangeForm, AvatarForm, CommentForm,  BlogForm, CustomUserCreationForm
 from django.db import models
-from .models import Blog, Order, UserProfile, Comment
+from .models import Blog, Category, Order, Product, UserProfile, Comment
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
@@ -176,7 +176,7 @@ def newpost(request):
           'form': form, 
           'year': datetime.now().year,
        }
-     )
+    )
 
 def videopost(request):
     assert isinstance(request, HttpRequest)
@@ -230,7 +230,14 @@ def change_password(request):
             messages.error(request, 'Please correct the error below.')
     else:
         form = CustomPasswordChangeForm(request.user)
-    return render(request, 'app/change_password.html', {'form': form})
+    return render(
+        request, 
+        'app/change_password.html', 
+        {
+            'form': form,
+            'year': datetime.now().year,
+        }
+    )
 
 def add_avatar(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
@@ -244,4 +251,35 @@ def add_avatar(request):
             messages.error(request, 'Please correct the error below.')
     else:
         form = AvatarForm(instance=user_profile)
-    return render(request, 'app/add_avatar.html', {'form': form})
+    return render(
+        request,
+       'app/add_avatar.html', 
+       {
+           'form': form,
+           'year': datetime.now().year,
+       }
+    )
+
+def catalog(request):
+    categories = Category.objects.all()
+    return render(
+        request, 
+        'app/catalog.html',
+       {
+           'categories': categories,
+           'year': datetime.now().year,
+       }
+    )
+
+def category_detail(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    products = Product.objects.filter(category=category)
+    return render(
+        request,
+       'app/category_detail.html', 
+       {
+          'category': category,
+          'products': products,
+          'year': datetime.now().year,
+       }
+    )
