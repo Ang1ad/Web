@@ -5,10 +5,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import update_session_auth_hash
 from .forms import AnketaForm, CustomPasswordChangeForm, AvatarForm, CommentForm,  BlogForm, CustomUserCreationForm
 from django.db import models
-from .models import Blog, Category, Order, Product, Service, ServiceType, UserProfile, Comment
+from .models import Blog, Car, Order, UserProfile, Comment
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
+import django_filters
+from django_filters import rest_framework as filters
+
+from app import forms
 
 
 def home(request):
@@ -259,51 +263,35 @@ def add_avatar(request):
            'year': datetime.now().year,
        }
     )
-
+        
 def catalog(request):
-    categories = Category.objects.all()
-    return render(
-        request, 
-        'app/catalog.html',
-       {
-           'categories': categories,
-           'year': datetime.now().year,
-       }
-    )
+    return render(request, 'app/catalog.html', {'year': datetime.now().year,})
 
-def category_detail(request, category_id):
-    category = get_object_or_404(Category, id=category_id)
-    products = Product.objects.filter(category=category)
-    return render(
-        request,
-       'app/category_detail.html', 
-       {
-          'category': category,
-          'products': products,
-          'year': datetime.now().year,
-       }
-    )
+def car_list(request):
+    brand = request.GET.get('brand', '')
+    model = request.GET.get('model', '')
+    year = request.GET.get('year', '')
+    condition = request.GET.get('condition', '')
+    price_min = request.GET.get('price_min', '')
+    price_max = request.GET.get('price_max', '')
+    ordering = request.GET.get('ordering', '')
 
-def catalog(request):
-    categories = Category.objects.all()
-    service_types = ServiceType.objects.all()
-    return render(request, 'app/catalog.html', {'categories': categories, 'service_types': service_types})
+    cars = Car.objects.all()
 
-def catalog_auto(request):
-    brands = [choice[0] for choice in Product.BRAND_CHOICES]
-    models = [choice[0] for choice in Product.MODEL_CHOICES]
-    generations = [choice[0] for choice in Product.GENERATION_CHOICES]
-    conditions = [choice[0] for choice in Product.CONDITION_CHOICES]
-    products = Product.objects.all()
-    return render(request, 'app/catalog_auto.html', {
-        'brands': brands,
-        'models': models,
-        'generations': generations,
-        'conditions': conditions,
-        'products': products
-    })
+    if brand:
+        cars = cars.filter(brand__icontains=brand)
+    if model:
+        cars = cars.filter(model__icontains=model)
+    if year:
+        cars = cars.filter(year=year)
+    if condition:
+        cars = cars.filter(condition=condition)
+    if price_min:
+        cars = cars.filter(price__gte=price_min)
+    if price_max:
+        cars = cars.filter(price__lte=price_max)
 
-def catalog_service(request, service_type_id):
-    service_type = get_object_or_404(ServiceType, id=service_type_id)
-    services = Service.objects.filter(service_type=service_type)
-    return render(request, 'app/catalog_service.html', {'service_type': service_type, 'services': services})
+    if ordering:
+        cars = cars.order_by(ordering)
+
+    return render(request, 'app/car_list.html', {'cars': cars, 'year': datetime.now().year,})

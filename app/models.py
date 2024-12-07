@@ -5,7 +5,6 @@ from datetime import datetime
 from django.db import models
 from django.contrib import admin
 from django.urls import reverse
-from datetime import datetime
 from django.contrib.auth.models import User
 
 class Blog(models.Model):
@@ -62,80 +61,20 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-    
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-class Product(models.Model):
-    BRAND_CHOICES = [
-        ('Toyota', 'Toyota'),
-        ('Honda', 'Honda'),
-        ('Ford', 'Ford'),
-    ]
-    
-    MODEL_CHOICES = [
-        ('Camry', 'Camry'),
-        ('Accord', 'Accord'),
-        ('Focus', 'Focus'),
-    ]
-    
-    GENERATION_CHOICES = [
-        ('1st', '1st Generation'),
-        ('2nd', '2nd Generation'),
-        ('3rd', '3rd Generation'),
-    ]
-    
+class Car(models.Model):
     CONDITION_CHOICES = [
-        ('new', 'New'),
-        ('used', 'Used'),
+        ('new', 'Новое'),
+        ('used', 'Б/У'),
     ]
     
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    brand = models.CharField(max_length=50, choices=BRAND_CHOICES)
-    model = models.CharField(max_length=50, choices=MODEL_CHOICES)
-    generation = models.CharField(max_length=50, choices=GENERATION_CHOICES)
-    year = models.PositiveIntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    condition = models.CharField(max_length=10, choices=CONDITION_CHOICES)
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    brand = models.CharField(max_length=100, verbose_name="Марка")
+    model = models.CharField(max_length=100, verbose_name="Модель")
+    year = models.IntegerField(verbose_name="Год производства")
+    condition = models.CharField(max_length=4, choices=CONDITION_CHOICES, verbose_name="Состояние")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
+    image = models.ImageField(upload_to='cars/', verbose_name="Изображение")
 
     def __str__(self):
-        return f'{self.brand} {self.model} ({self.year})'
-
-class ServiceType(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-class Service(models.Model):
-    service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def __str__(self):
-        return self.name
+        return f"{self.brand} {self.model} ({self.year})"
         
 admin.site.register(Blog) 

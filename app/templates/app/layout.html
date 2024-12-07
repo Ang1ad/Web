@@ -16,16 +16,16 @@
 <body>
     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
         <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"  style="background-color: #0026ff"></li>
-            <li data-target="#myCarousel" data-slide-to="1"  style="background-color: #0026ff "></li>
-            <li data-target="#myCarousel" data-slide-to="2"  style="background-color: #0026ff; "></li>
+            <li data-target="#myCarousel" data-slide-to="0" class="active" style="background-color: #0026ff; margin: auto auto -30px;"></li>
+            <li data-target="#myCarousel" data-slide-to="1"  style="background-color: #0026ff; margin: auto auto -30px; "></li>
+            <li data-target="#myCarousel" data-slide-to="2"  style="background-color: #0026ff; margin: auto auto -30px; "></li>
         </ol>
 
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img style="width: 25%; height: auto; display: block; margin: auto auto;" src="{% static 'app/content/cattouchretPolo.webp'%} " alt="Первый слайд" class="img-responsive" />
+                <img style="width: 25%; height: auto; display: block; margin: auto;" src="{% static 'app/content/cattouchretPolo.webp'%} " alt="Первый слайд" class="img-responsive" />
                 <div class="carousel-caption" role="option">
-                    <p style="color:white;">
+                    <p style="color: white; margin: 50px 50px -30px; ">
                         Volkswagen Polo Sedan 5 поколения
                         <a class="btn btn-info" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
                             Читать далее
@@ -34,10 +34,10 @@
                 </div>
             </div>
             <div class="item">
-                <img style="width: 25%; height: auto; display: block; margin: 0 auto;" src="{% static 'app/content/cattouchret.webp'%}" alt="Второй слайд" class="img-responsive" />
+                <img style="width: 25%; height: auto; display: block; margin: auto;" src="{% static 'app/content/cattouchret.webp'%}" alt="Второй слайд" class="img-responsive" />
                 <div class="carousel-caption" role="option">
                     <br />
-                    <p style="color: white;">
+                    <p style="color: white; margin: 50px 50px -30px;">
                         Renault Logan Stepway
                         <a class="btn btn-info" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
                             Читать далее
@@ -46,9 +46,9 @@
                 </div>
             </div>
             <div class="item">
-                <img style="width: 25%; height: auto; display: block; margin: 0 auto;" src=" {% static 'app/content/cattouchretLada.webp'%} " alt="Третий слайд" class="img-responsive" />
+                <img style="width: 25%; height: auto; display: block; margin: auto; " src=" {% static 'app/content/cattouchretLada.webp'%} " alt="Третий слайд" class="img-responsive" />
                 <div class="carousel-caption" role="option">
-                    <p style="color: white;">
+                    <p style="color: white; margin: 50px 50px -30px;">
                         Новая Lada Vesta Sport
                         <a class="btn btn-info" href="../../blogpost/5/">
                             Читать далее
@@ -81,21 +81,21 @@
                     <img style="position: absolute; top: 10px; left: 100px; width: 80px; height: auto;" src="{% static 'app/content/logo.png' %}" alt="logo" />
                 </a>
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" style="margin-top: 20px">
                 <ul class="nav navbar-nav">
-                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin:4px 3px 2px 3px" href="{% url 'home' %}">Домашняя страница</a></li>
-                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'about' %}">О компании</a></li>
-                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'contact' %}">Контакты</a></li>
-                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'links' %}">Полезные ресурсы</a></li>
-                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'videopost' %}">Видео</a></li>
-                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'anketa' %}">Отзыв</a></li>
-                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'blog' %}">Блог</a></li>
-                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'catalog' %}">Каталог</a></li>
-                    {% if request.user.is_superuser %}
-                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'newpost' %}">Добавить статью блога</a></li>
+                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'home' %}">Домашняя страница</a></li>
+                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'about' %}">О компании</a></li>
+                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'contact' %}">Контакты</a></li>
+                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'links' %}">Полезные ресурсы</a></li>
+                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'videopost' %}">Видео</a></li>
+                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'anketa' %}">Отзыв</a></li>
+                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'blog' %}">Блог</a></li>
+                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'catalog' %}">Каталог</a></li>
+                    {% if request.user.is_superuser %} <!--Можно добавление сделать с этим же запросом-->
+                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'newpost' %}">Добавить статью блога</a></li>
                     {% endif %}
                     {% if not user.is_authenticated %}
-                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 2px 3px " href="{% url 'registration' %}">Регистрация</a></li>
+                    <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'registration' %}">Регистрация</a></li>
                     {% endif %}
                 </ul>
                 {% include 'app/loginpartial.html' %}
@@ -110,7 +110,6 @@
             <p>&copy; {{ year }} - AutoSaleOn</p>
         </footer>
     </div>
-
 
     <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
     <script src="{% static 'app/scripts/respond.js' %}"></script>

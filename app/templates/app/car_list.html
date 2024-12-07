@@ -1,0 +1,51 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<h1>Список автомобилей</h1>
+<form method="get" action="{% url 'car_list' %}">
+    <label for="brand">Марка:</label>
+    <input type="text" id="brand" name="brand" value="{{ request.GET.brand }}">
+
+    <label for="model">Модель:</label>
+    <input type="text" id="model" name="model" value="{{ request.GET.model }}">
+
+    <label for="year">Год:</label>
+    <input type="number" id="year" name="year" value="{{ request.GET.year }}">
+
+    <label for="condition">Состояние:</label>
+    <select id="condition" name="condition">
+        <option value="">Все</option>
+        <option value="new" {% if request.GET.condition == 'new' %} selected {% endif %}>Новая</option>
+        <option value="used" {% if request.GET.condition == 'used' %} selected {% endif %}>Б/у</option>
+    </select>
+
+    <label for="price_min">Цена от:</label>
+    <input type="number" id="price_min" name="price_min" value="{{ request.GET.price_min }}">
+
+    <label for="price_max">Цена до:</label>
+    <input type="number" id="price_max" name="price_max" value="{{ request.GET.price_max }}">
+
+    <label for="ordering">Сортировка:</label>
+    <select id="ordering" name="ordering">
+        <option value="">Без сортировки</option>
+        <option value="price" {% if request.GET.ordering == 'price' %} selected {% endif %}>Цена по возрастанию</option>
+        <option value="-price" {% if request.GET.ordering == '-price' %} selected {% endif %}>Цена по убыванию</option>
+        <option value="year" {% if request.GET.ordering == 'year' %} selected {% endif %}>Год по возрастанию</option>
+        <option value="-year" {% if request.GET.ordering == '-year' %} selected {% endif %}>Год по убыванию</option>
+    </select>
+
+    <button type="submit">Применить</button>
+</form>
+
+<div class="car-list">
+    {% for car in cars %}
+    <div class="car-card">
+        <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+        <h3>{{ car.brand }} {{ car.model }}</h3>
+        <p>Год: {{ car.year }}</p>
+        <p>Состояние: {{ car.get_condition_display }}</p>
+        <p>Цена: {{ car.price }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

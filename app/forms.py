@@ -6,8 +6,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from .models import Comment, UserProfile 
-from .models import Blog
+from .models import Comment, UserProfile, Blog
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import User
 
@@ -81,12 +80,3 @@ class AvatarForm(forms.ModelForm):
         model = UserProfile
         fields = ['avatar']
         
-class ProductForm(forms.ModelForm):
-    class Meta:
-        model = Product
-        fields = ['category', 'brand', 'model', 'generation', 'year', 'price', 'condition', 'image']
-
-class ServiceForm(forms.ModelForm):
-    class Meta:
-        model = Service
-        fields = ['service_type', 'name', 'description', 'price']
