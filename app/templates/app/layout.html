@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <title>{{ title }} AutoSaleOn</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="static/app/content/logo.png" type="image/x-icon">
+    <link rel="icon" href="../static/app/content/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../static/app/content/logo.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5000" style="margin-top: 50px;">
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active" style="background-color: #0026ff; margin: auto auto -30px;"></li>
             <li data-target="#myCarousel" data-slide-to="1"  style="background-color: #0026ff; margin: auto auto -30px; "></li>
@@ -78,10 +78,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="/" class="navbar-brand">
-                    <img style="position: absolute; top: 10px; left: 100px; width: 80px; height: auto;" src="{% static 'app/content/logo.png' %}" alt="logo" />
+                    <img style="position: absolute; top: 5px; left: 30px; width: 80px; height: auto;" src="{% static 'app/content/logo.png' %}" alt="logo" />
                 </a>
             </div>
-            <div class="navbar-collapse collapse" style="margin-top: 20px">
+            <div class="navbar-collapse collapse" style="margin-top: 10px;">
                 <ul class="nav navbar-nav">
                     <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'home' %}">Домашняя страница</a></li>
                     <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'about' %}">О компании</a></li>
@@ -91,7 +91,7 @@
                     <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'anketa' %}">Отзыв</a></li>
                     <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'blog' %}">Блог</a></li>
                     <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'catalog' %}">Каталог</a></li>
-                    {% if request.user.is_superuser %} <!--Можно добавление сделать с этим же запросом-->
+                    {% if request.user.is_staff %}
                     <li><a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'newpost' %}">Добавить статью блога</a></li>
                     {% endif %}
                     {% if not user.is_authenticated %}

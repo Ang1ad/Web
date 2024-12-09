@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib import admin
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 class Blog(models.Model):
     title = models.CharField(max_length = 100, unique_for_date = "posted", verbose_name = "Заголовок")
@@ -76,5 +77,43 @@ class Car(models.Model):
 
     def __str__(self):
         return f"{self.brand} {self.model} ({self.year})"
-        
+
+class ServiceType(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class Service(models.Model):
+    service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+
+class CartItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, null=True, blank=True)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def clean(self):
+        if self.car and self.service:
+            raise ValidationError('CartItem cannot have both car and service.')
+        if not self.car and not self.service:
+            raise ValidationError('CartItem must have either car or service.')
+
+    def total_price(self):
+        if self.car:
+            return self.quantity * self.car.price
+        elif self.service:
+            return self.quantity * self.service.price
+        return 0
+    
+
 admin.site.register(Blog) 
+admin.site.register(Car)
+admin.site.register(Service)
+admin.site.register(ServiceType)

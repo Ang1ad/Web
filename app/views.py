@@ -2,10 +2,11 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-from .forms import AnketaForm, CustomPasswordChangeForm, AvatarForm, CommentForm,  BlogForm, CustomUserCreationForm
+from .forms import AnketaForm, AutoForm, CustomPasswordChangeForm, AvatarForm, CommentForm,  BlogForm, CustomUserCreationForm
 from django.db import models
-from .models import Blog, Car, Order, UserProfile, Comment
+from .models import Blog, Car, CartItem, Order, UserProfile, Comment, ServiceType, Service
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
@@ -295,3 +296,65 @@ def car_list(request):
         cars = cars.order_by(ordering)
 
     return render(request, 'app/car_list.html', {'cars': cars, 'year': datetime.now().year,})
+
+def car_detail(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    return render(request, 'app/car_detail.html', {'car': car, 'year': datetime.now().year,})
+
+def newauto(request):
+    assert isinstance(request, HttpRequest)
+    if request.method == 'POST':
+        form = AutoForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_auto = form.save(commit=False)
+            new_auto.author = request.user  
+            new_auto.save()
+            return redirect('catalog/cars')
+    else:
+        form = AutoForm()
+    return render(
+        request,
+       'app/newauto.html',
+       {
+          'form': form, 
+          'year': datetime.now().year,
+       }
+    )
+
+def cart(request):
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.total_price() for item in cart_items)
+    else:
+        cart_items = []
+        total_price = 0
+    return render(request, 'app/cart.html', {'cart_items': cart_items, 'total_price': total_price, 'year': datetime.now().year})
+
+def service_list(request):
+    service_types = ServiceType.objects.all()
+    return render(request, 'app/service_list.html', {'service_types': service_types, 'year': datetime.now().year,})
+
+def service_detail(request, service_id):
+    service = Service.objects.get(id=service_id)
+    return render(request, 'app/service_detail.html', {'service': service, 'year': datetime.now().year,})
+
+@login_required
+def add_to_cart(request, item_type, item_id):
+    if item_type == 'car':
+        item = get_object_or_404(Car, id=item_id)
+        cart_item, created = CartItem.objects.get_or_create(user=request.user, car=item, service=None)
+    elif item_type == 'service':
+        item = get_object_or_404(Service, id=item_id)
+        cart_item, created = CartItem.objects.get_or_create(user=request.user, service=item, car=None)
+    else:
+        return redirect('cart')
+
+    if not created:
+        cart_item.quantity += 1
+    cart_item.save()
+    return redirect('cart')
+
+def remove_from_cart(request, item_id):
+    item = get_object_or_404(CartItem, id=item_id)
+    item.delete()
+    return redirect('cart')

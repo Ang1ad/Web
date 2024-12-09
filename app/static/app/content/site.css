@@ -11,7 +11,7 @@ body {
 }
 
 .container {
-    max-width: 1300px;
+    max-width: 1500px;
     padding: 0 20px ;
 }
 
@@ -72,7 +72,7 @@ label, address, h1, h2, h3 {
     text-align: center;
 }
 
-p, li, h4, span, a, th {
+p, li, h4, span, a, th, td, tr {
     color: white;
 }
 

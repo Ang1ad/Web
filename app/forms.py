@@ -6,7 +6,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from .models import Comment, UserProfile, Blog
+from .models import Car, Comment, UserProfile, Blog
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import User
 
@@ -41,14 +41,14 @@ class AnketaForm(forms.Form):
 
 class CommentForm (forms.ModelForm):
     class Meta:
-        model = Comment # используемая модель
-        fields = ('text',) # требуется заполнить только поле text
-        labels = {'text': "Комментарий"} # метка к полю формы text
+        model = Comment
+        fields = ('text',) 
+        labels = {'text': "Комментарий"}
         
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ('title', 'description', 'content', 'image')  # Поля для ввода в форме
+        fields = ('title', 'description', 'content', 'image')
         
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, label='Email')
@@ -79,4 +79,9 @@ class AvatarForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['avatar']
+        
+class AutoForm(forms.ModelForm):
+    class Meta:
+        model = Car
+        fields = ('brand', 'model', 'year', 'condition', 'price', 'image')
         

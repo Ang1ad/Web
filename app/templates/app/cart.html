@@ -1,0 +1,75 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<h1>Корзина</h1>
+
+{% if cart_items %}
+<h2>Автомобили</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Автомобиль</th>
+            <th>Количество</th>
+            <th>Цена</th>
+            <th>Итого</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        {% if item.car %}
+        <tr>
+            <td>{{ item.car.brand }} {{ item.car.model }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.car.price|floatformat:"2" }}</td>
+            <td>{{ item.total_price|floatformat:"2" }}</td>
+            <td>
+                <form action="{% url 'remove_from_cart' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Услуги</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Услуга</th>
+            <th>Количество</th>
+            <th>Цена</th>
+            <th>Итого</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        {% if item.service %}
+        <tr>
+            <td>{{ item.service.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.service.price|floatformat:"2" }}</td>
+            <td>{{ item.total_price|floatformat:"2" }}</td>
+            <td>
+                <form action="{% url 'remove_from_cart' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Общая сумма: {{ total_price|floatformat:"2" }}</h3>
+{% else %}
+<p>Ваша корзина пуста.</p>
+{% endif %}
+
+{% endblock %}

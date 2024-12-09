@@ -41,6 +41,14 @@ urlpatterns = [
     path('addavatar/', views.add_avatar, name='add_avatar'),
     path('catalog/', views.catalog, name='catalog'),
     path('catalog/cars/', views.car_list, name='car_list'),
+    path('catalog/auto/<int:car_id>/', views.car_detail, name='car_detail'),
+    path('newauto/', views.newauto, name='newauto'),
+    path('cart/', views.cart, name='cart'),
+    path('add-to-cart/<str:item_type>/<int:item_id>/', views.add_to_cart, name='add_to_cart'),
+    path('catalog/services/', views.service_list, name='service_list'),
+    path('catalog/services/<int:service_id>/', views.service_detail, name='service_detail'),
+    path('remove_from_cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
+    
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()

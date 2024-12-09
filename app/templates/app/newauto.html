@@ -1,0 +1,43 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<h1>Добавить автомобиль</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="fieldWrapper">
+        {{ form.brand.errors }}
+        <label for="{{ form.brand.id_for_label }}">Марка:</label>
+        {{ form.brand }}
+    </div>
+
+    <div class="fieldWrapper" style="padding-top: 10px;">
+        {{ form.model.errors }}
+        <label for="{{ form.model.id_for_label }}">Модель:</label>
+        {{ form.model }}
+    </div>
+    <div class="fieldWrapper" style="padding-top: 10px;">
+        {{ form.year.errors }}
+        <label for="{{ form.year.id_for_label }}">Год:</label>
+        {{ form.year }}
+    </div>
+    <div class="fieldWrapper" style="padding-top: 10px;">
+        {{ form.condition.errors }}
+        <label for="{{ form.condition.id_for_label }}">Состояние:</label>
+        {{ form.condition }}
+    </div>
+    <div class="fieldWrapper" style="padding-top: 10px;">
+        {{ form.price.errors }}
+        <label for="{{ form.price.id_for_label }}">Цена:</label>
+        {{ form.price }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.image.errors }}
+        <label for="{{ form.image.id_for_label }}">Выберите изображение:</label>
+        {{ form.image }}
+    </div>
+
+    <button class="btn btn-default" style="margin-top: 10px;">Добавить автомобиль</button>
+</form>
+{% endblock %}

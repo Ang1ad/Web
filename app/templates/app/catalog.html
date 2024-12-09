@@ -1,11 +1,18 @@
 {% extends "app/layout.html" %}
+{% load static %}
 
 {% block content %}
 <h1>Каталог</h1>
 <p>Добро пожаловать на страницу каталога! Выберите нужную категорию:</p>
 
 <ul>
-    <li><a href="{% url 'car_list' %}">Автомобили</a></li>
-    <li><a href="#">Услуги</a> (будет добавлено позже)</li>
+    <li>
+        <a href="{% url 'car_list' %}">Автомобили</a>
+        <img class="logo1" src="{% static 'app/content/car.jpg' %}" alt="Car" />
+    </li>
+    <li>
+        <a href="{% url 'service_list' %}">Услуги</a>
+        <img class="logo1" src="{% static 'app/content/services.png' %}" alt="Services" />
+    </li>
 </ul>
 {% endblock %}

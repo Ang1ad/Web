@@ -1,0 +1,13 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>{{ service.name }}</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <p><strong>Описание:</strong> {{ service.description }}</p>
+            <p><strong>Цена:</strong> {{ service.price }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
