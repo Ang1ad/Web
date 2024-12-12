@@ -1,11 +1,13 @@
-<!DOCTYPE html>
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+<h1>Редактировать услугу</h1>
 
-</body>
-</html>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+{% endblock %}

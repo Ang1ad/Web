@@ -15,8 +15,11 @@
             <p><strong>Год производства:</strong> {{ car.year }}</p>
             <p><strong>Состояние:</strong> {{ car.get_condition_display }}</p>
             <p><strong>Цена:</strong> {{ car.price }}</p>
+            {% if request.user.is_staff %}
+            <a href="{% url 'edit_car' car.id %}" class="btn btn-primary">Изменить</a>
+            {% endif %}
         </div>
-        
     </div>
 </div>
+
 {% endblock %}

@@ -7,6 +7,9 @@
         <div class="col-md-12">
             <p><strong>Описание:</strong> {{ service.description }}</p>
             <p><strong>Цена:</strong> {{ service.price }}</p>
+            {% if request.user.is_staff %}
+            <a href="{% url 'edit_service' service.id %}" class="btn btn-primary">Изменить</a>
+            {% endif %}
         </div>
     </div>
 </div>

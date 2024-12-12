@@ -342,6 +342,8 @@ def service_detail(request, service_id):
 def add_to_cart(request, item_type, item_id):
     if item_type == 'car':
         item = get_object_or_404(Car, id=item_id)
+        if item.quantity <= 0:
+            messages.error(request, f"Автомобиль {item.brand} {item.model} нет в наличии.")
         cart_item, created = CartItem.objects.get_or_create(user=request.user, car=item, service=None)
     elif item_type == 'service':
         item = get_object_or_404(Service, id=item_id)
@@ -365,6 +367,10 @@ def place_order(request):
         cart_items = CartItem.objects.filter(user=request.user)
         if not cart_items:
             return redirect('cart')
+        
+        for item in cart_items:
+            if item.car and item.car.quantity < item.quantity:
+                messages.error(request, f"Автомобиль {item.brand} {item.model} нет в наличии.")
 
         total_price = sum(item.total_price() for item in cart_items)
         order = Order.objects.create(user=request.user, total_price=total_price)
@@ -424,3 +430,15 @@ def edit_car(request, car_id):
     else:
         form = AutoForm(instance=car)
     return render(request, 'app/edit_car.html', {'form': form, 'car': car})
+
+@login_required
+def edit_service(request, service_id):
+    service = get_object_or_404(Service, id=service_id)
+    if request.method == 'POST':
+        form = ServiceForm(request.POST, instance=service)
+        if form.is_valid():
+            form.save()
+            return redirect('service_detail', service_id=service.id)
+    else:
+        form = ServiceForm(instance=service)
+    return render(request, 'app/edit_service.html', {'form': form, 'service': service})

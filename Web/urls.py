@@ -53,7 +53,7 @@ urlpatterns = [
     path('place_order/', views.place_order, name='place_order'),
     path('newservice/', views.newservice, name='newservice'),
     path('car/<int:car_id>/edit/', views.edit_car, name='edit_car'),
-    
+    path('service/<int:service_id>/edit/', views.edit_service, name='edit_service'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()

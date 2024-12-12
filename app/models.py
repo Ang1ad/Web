@@ -57,6 +57,7 @@ class Car(models.Model):
     condition = models.CharField(max_length=4, choices=CONDITION_CHOICES, verbose_name="Состояние")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     image = models.ImageField(upload_to='cars/', verbose_name="Изображение")
+    quantity = models.PositiveIntegerField(default=0, verbose_name="Количество")
 
     def __str__(self):
         return f"{self.brand} {self.model} ({self.year})"
