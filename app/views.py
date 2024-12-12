@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-from .forms import AnketaForm, AutoForm, CustomPasswordChangeForm, AvatarForm, CommentForm,  BlogForm, CustomUserCreationForm, ServiceForm
+from .forms import AnketaForm, AutoForm, CustomPasswordChangeForm, AvatarForm, CommentForm,  BlogForm, CustomUserCreationForm, ServiceForm, UserProfileForm
 from django.db import models
 from .models import Blog, Car, CartItem, Order, OrderItem, UserProfile, Comment, ServiceType, Service
 from datetime import datetime
@@ -244,25 +244,30 @@ def change_password(request):
         }
     )
 
-def add_avatar(request):
+@login_required
+def change_profile(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
-        form = AvatarForm(request.POST, request.FILES, instance=user_profile)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Your avatar was successfully updated!')
-            return redirect('add_avatar')
+        avatar_form = AvatarForm(request.POST, request.FILES, instance=user_profile)
+        profile_form = UserProfileForm(request.POST, instance=request.user)
+        if avatar_form.is_valid() and profile_form.is_valid():
+            avatar_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('change_profile')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        form = AvatarForm(instance=user_profile)
+        avatar_form = AvatarForm(instance=user_profile)
+        profile_form = UserProfileForm(instance=request.user)
     return render(
         request,
-       'app/add_avatar.html', 
-       {
-           'form': form,
-           'year': datetime.now().year,
-       }
+        'app/change_profile.html',
+        {
+            'avatar_form': avatar_form,
+            'profile_form': profile_form,
+            'year': datetime.now().year,
+        }
     )
         
 def catalog(request):
@@ -442,3 +447,17 @@ def edit_service(request, service_id):
     else:
         form = ServiceForm(instance=service)
     return render(request, 'app/edit_service.html', {'form': form, 'service': service})
+
+@login_required
+def delete_car(request, car_id):
+    if request.method == 'POST' and request.user.is_staff:
+        car = get_object_or_404(Car, id=car_id)
+        car.delete()
+    return redirect('car_list')
+
+@login_required
+def delete_service(request, service_id):
+    if request.method == 'POST' and request.user.is_staff:
+        service = get_object_or_404(Service, id=service_id)
+        service.delete()
+    return redirect('service_list') 

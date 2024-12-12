@@ -80,7 +80,7 @@
     <Content Include="app\static\app\content\cattouchretPolo.webp" />
     <Content Include="app\static\app\content\icon.png" />
     <Content Include="app\static\app\content\lada_logo.png" />
-    <Content Include="app\templates\app\add_avatar.html" />
+    <Content Include="app\templates\app\change_profile.html" />
     <Content Include="app\templates\app\blog.html" />
     <Content Include="app\templates\app\blogpost.html" />
     <Content Include="app\templates\app\cabinet.html" />

@@ -10,7 +10,14 @@
             {% if request.user.is_staff %}
             <a href="{% url 'edit_service' service.id %}" class="btn btn-primary">Изменить</a>
             {% endif %}
+            {% if request.user.is_staff %}
+            <form action="{% url 'delete_service' service.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Удалить</button>
+            </form>
+            {% endif %}
         </div>
     </div>
+    <a href="../" class="btn btn-primary">В каталог</a>
 </div>
 {% endblock %}

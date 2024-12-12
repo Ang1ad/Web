@@ -4,14 +4,16 @@
 {% block content %}
 <h1>Каталог</h1>
 
-<ul>
-    <li>
+<div class="catalog-container">
+    <div class="catalog-item">
+        <img class="logo1" src="{% static 'app/content/car.jpg' %}" style="width:315px; height: auto;" alt="Car" />
+        <br />
         <a href="{% url 'car_list' %}">Автомобили</a>
-        <img class="logo1" src="{% static 'app/content/car.jpg' %}" alt="Car" />
-    </li>
-    <li>
+    </div>
+    <div class="catalog-item">
+        <img class="logo1" src="{% static 'app/content/services.png' %}" style="width:190px; height: auto;" alt="Services" />
+        <br />
         <a href="{% url 'service_list' %}">Услуги</a>
-        <img class="logo1" src="{% static 'app/content/services.png' %}" alt="Services" />
-    </li>
-</ul>
+    </div>
+</div>
 {% endblock %}

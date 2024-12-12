@@ -32,6 +32,11 @@
         <label for="{{ form.price.id_for_label }}">Цена:</label>
         {{ form.price }}
     </div>
+    <div class="fieldWrapper" style="padding-top: 10px;">
+        {{ form.quantity.errors }}
+        <label for="{{ form.quantity.id_for_label }}">Количество:</label>
+        {{ form.quantity }}
+    </div>
     <div class="fieldWrapper">
         {{ form.image.errors }}
         <label for="{{ form.image.id_for_label }}">Выберите изображение:</label>

@@ -17,7 +17,7 @@
                     <p class="card-text">Логин: {{ user.username }}</p>
                     <p class="card-text">Имя: {{ user.first_name }} {{ user.last_name }}</p>
                     <p class="card-text">Email: {{ user.email }}</p>
-                    <a href="{% url 'add_avatar' %}" class="btn btn-primary">Редактировать профиль</a>
+                    <a href="{% url 'change_profile' %}" class="btn btn-primary">Редактировать профиль</a>
                     <a href="{% url 'change_password' %}" class="btn btn-primary">Сменить пароль</a>
                 </div>
             </div>

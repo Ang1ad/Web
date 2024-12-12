@@ -15,11 +15,19 @@
             <p><strong>Год производства:</strong> {{ car.year }}</p>
             <p><strong>Состояние:</strong> {{ car.get_condition_display }}</p>
             <p><strong>Цена:</strong> {{ car.price }}</p>
+            <p><strong>Количество:</strong> {{ car.quantity }}</p>
             {% if request.user.is_staff %}
             <a href="{% url 'edit_car' car.id %}" class="btn btn-primary">Изменить</a>
             {% endif %}
+            {% if request.user.is_staff %}
+            <form action="{% url 'delete_car' car.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Удалить</button>
+            </form>
+            {% endif %}
         </div>
     </div>
+    <a href="../" class="btn btn-primary">В каталог</a>
 </div>
 
 {% endblock %}

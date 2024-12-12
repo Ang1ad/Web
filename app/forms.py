@@ -79,11 +79,22 @@ class AvatarForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['avatar']
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+        self.fields['email'].required = True
         
 class AutoForm(forms.ModelForm):
     class Meta:
         model = Car
-        fields = ('brand', 'model', 'year', 'condition', 'price', 'image')
+        fields = ('brand', 'model', 'year', 'condition', 'price', 'quantity', 'image')
         
 class ServiceForm(forms.ModelForm):
     class Meta:

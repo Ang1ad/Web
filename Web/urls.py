@@ -38,10 +38,10 @@ urlpatterns = [
     path('videopost/', views.videopost, name='videopost'),
     path('cabinet/', views.cabinet, name='cabinet'),
     path('changepassword/', views.change_password, name='change_password'),
-    path('addavatar/', views.add_avatar, name='add_avatar'),
+    path('change_profile/', views.change_profile, name='change_profile'),
     path('catalog/', views.catalog, name='catalog'),
     path('catalog/cars/', views.car_list, name='car_list'),
-    path('catalog/auto/<int:car_id>/', views.car_detail, name='car_detail'),
+    path('catalog/cars/<int:car_id>/', views.car_detail, name='car_detail'),
     path('newauto/', views.newauto, name='newauto'),
     path('cart/', views.cart, name='cart'),
     path('add-to-cart/<str:item_type>/<int:item_id>/', views.add_to_cart, name='add_to_cart'),
@@ -54,6 +54,8 @@ urlpatterns = [
     path('newservice/', views.newservice, name='newservice'),
     path('car/<int:car_id>/edit/', views.edit_car, name='edit_car'),
     path('service/<int:service_id>/edit/', views.edit_service, name='edit_service'),
+    path('car/<int:car_id>/delete/', views.delete_car, name='delete_car'),
+    path('service/<int:service_id>/delete/', views.delete_service, name='delete_service'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()
