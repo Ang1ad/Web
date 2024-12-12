@@ -55,7 +55,7 @@
 
 </div>
 
-{% if request.user.is_superuser %}
+{% if request.user.is_staff %}
 <a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'newauto' %}">Добавить автомобиль</a>
 {% endif %}
 {% endblock %}

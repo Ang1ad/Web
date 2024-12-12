@@ -1,0 +1,39 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<h1>Детали заказа</h1>
+
+<p>Дата заказа: {{ order.created_at }}</p>
+<p>Общая сумма: {{ order.total_price|floatformat:"2" }}</p>
+<p>Статус: {{ order.status }}</p>
+
+<h2>Товары</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Товар</th>
+            <th>Количество</th>
+            <th>Цена</th>
+            <th>Итого</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order_items %}
+        <tr>
+            <td>
+                {% if item.car %}
+                {{ item.car.brand }} {{ item.car.model }}
+                {% elif item.service %}
+                {{ item.service.name }}
+                {% endif %}
+            </td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price|floatformat:"2" }}</td>
+            <td>{{ item.total_price|floatformat:"2" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

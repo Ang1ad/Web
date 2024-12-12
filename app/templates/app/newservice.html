@@ -1,11 +1,33 @@
-<!DOCTYPE html>
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+<h1>Добавить автомобиль</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="fieldWrapper">
+        {{ form.service_type.errors }}
+        <label for="{{ form.service_type.id_for_label }}">Тип услуги:</label>
+        {{ form.service_type }}
+    </div>
 
-</body>
-</html>
+    <div class="fieldWrapper" style="padding-top: 10px;">
+        {{ form.name.errors }}
+        <label for="{{ form.name.id_for_label }}">Наименование:</label>
+        {{ form.name }}
+    </div>
+    <div class="fieldWrapper" style="padding-top: 10px;">
+        {{ form.description.errors }}
+        <label for="{{ form.description.id_for_label }}">Описание:</label>
+        {{ form.description }}
+    </div>
+    <div class="fieldWrapper" style="padding-top: 10px;">
+        {{ form.price.errors }}
+        <label for="{{ form.price.id_for_label }}">Цена:</label>
+        {{ form.price }}
+    </div>
+
+    <button class="btn btn-default" style="margin-top: 10px;">Добавить услугу</button>
+</form>
+{% endblock %}

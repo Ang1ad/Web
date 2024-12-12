@@ -68,6 +68,10 @@
 </table>
 
 <h3>Общая сумма: {{ total_price|floatformat:"2" }}</h3>
+<form action="{% url 'place_order' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Оформить заказ</button>
+</form>
 {% else %}
 <p>Ваша корзина пуста.</p>
 {% endif %}

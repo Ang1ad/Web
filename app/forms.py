@@ -6,7 +6,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from .models import Car, Comment, UserProfile, Blog
+from .models import Car, Comment, Service, UserProfile, Blog
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import User
 
@@ -84,4 +84,9 @@ class AutoForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = ('brand', 'model', 'year', 'condition', 'price', 'image')
+        
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ('service_type', 'name', 'description', 'price')
         

@@ -26,7 +26,8 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">История заказов</h4>
-                    <table class="table">
+                    <a href="{% url 'order_history' %}" class="btn btn-primary">Подробнее</a>
+                    <!--<table class="table">
                         <thead>
                             <tr>
                                 <th>Дата создания</th>
@@ -41,11 +42,11 @@
                                 <td>{{ order.created_at }}</td>
                                 <td>{{ order.service }}</td>
                                 <td>{{ order.get_status_display }}</td>
-                                <td>{{ order.cost }}</td>
+                                <td>{{ order.total_price }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
-                    </table>
+                    </table>-->
                 </div>
             </div>
         </div>

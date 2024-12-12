@@ -23,4 +23,7 @@
     </div>
     {% endfor %}
 </div>
+{% if request.user.is_staff %}
+<a class="btn btn-outline-light" style="color: black; background-color: darkorange; margin: 4px 3px 0px 3px " href="{% url 'newservice' %}">Добавить услугу</a>
+{% endif %}
 {% endblock %}

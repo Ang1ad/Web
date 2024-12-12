@@ -4,9 +4,9 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-from .forms import AnketaForm, AutoForm, CustomPasswordChangeForm, AvatarForm, CommentForm,  BlogForm, CustomUserCreationForm
+from .forms import AnketaForm, AutoForm, CustomPasswordChangeForm, AvatarForm, CommentForm,  BlogForm, CustomUserCreationForm, ServiceForm
 from django.db import models
-from .models import Blog, Car, CartItem, Order, UserProfile, Comment, ServiceType, Service
+from .models import Blog, Car, CartItem, Order, OrderItem, UserProfile, Comment, ServiceType, Service
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
@@ -309,7 +309,7 @@ def newauto(request):
             new_auto = form.save(commit=False)
             new_auto.author = request.user  
             new_auto.save()
-            return redirect('catalog/cars')
+            return redirect('../catalog/cars')
     else:
         form = AutoForm()
     return render(
@@ -358,3 +358,69 @@ def remove_from_cart(request, item_id):
     item = get_object_or_404(CartItem, id=item_id)
     item.delete()
     return redirect('cart')
+
+@login_required
+def place_order(request):
+    if request.method == 'POST':
+        cart_items = CartItem.objects.filter(user=request.user)
+        if not cart_items:
+            return redirect('cart')
+
+        total_price = sum(item.total_price() for item in cart_items)
+        order = Order.objects.create(user=request.user, total_price=total_price)
+
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                car=item.car,
+                service=item.service,
+                quantity=item.quantity,
+                price=item.car.price if item.car else item.service.price
+            )
+
+        cart_items.delete()
+        return redirect('order_history')
+
+    return redirect('cart')
+
+@login_required
+def order_history(request):
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'app/order_history.html', {'orders': orders, 'year': datetime.now().year,})
+
+@login_required
+def order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    order_items = OrderItem.objects.filter(order=order)
+    return render(request, 'app/order_detail.html', {'order': order, 'order_items': order_items, 'year': datetime.now().year,})
+
+def newservice(request):
+    if request.method == 'POST':
+        form = ServiceForm(request.POST)
+        if form.is_valid():
+            new_service = form.save(commit=False)
+            new_service.author = request.user  
+            new_service.save()
+            return redirect('../catalog/services')
+    else:
+        form = ServiceForm()
+    return render(
+        request,
+       'app/newservice.html',
+       {
+          'form': form, 
+          'year': datetime.now().year,
+       }
+    )
+
+@login_required
+def edit_car(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    if request.method == 'POST':
+        form = AutoForm(request.POST, request.FILES, instance=car)
+        if form.is_valid():
+            form.save()
+            return redirect('car_detail', car_id=car.id)
+    else:
+        form = AutoForm(instance=car)
+    return render(request, 'app/edit_car.html', {'form': form, 'car': car})

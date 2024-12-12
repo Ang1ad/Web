@@ -89,11 +89,15 @@
     <Content Include="app\templates\app\car_list.html" />
     <Content Include="app\templates\app\catalog.html" />
     <Content Include="app\templates\app\change_password.html" />
+    <Content Include="app\templates\app\edit_car.html" />
+    <Content Include="app\templates\app\edit_service.html" />
     <Content Include="app\templates\app\links.html" />
     <Content Include="app\templates\app\anketa.html" />
     <Content Include="app\templates\app\newauto.html" />
     <Content Include="app\templates\app\newpost.html" />
     <Content Include="app\templates\app\newservice.html" />
+    <Content Include="app\templates\app\order_detail.html" />
+    <Content Include="app\templates\app\order_history.html" />
     <Content Include="app\templates\app\registration.html" />
     <Content Include="app\templates\app\service_detail.html" />
     <Content Include="app\templates\app\service_list.html" />

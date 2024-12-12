@@ -37,23 +37,6 @@ class Comment(models.Model):
         ordering = ["-date"]
         verbose_name = "комментарий"
         verbose_name_plural = "комментарии"
-        
-class Order(models.Model):
-    STATUS_CHOICES = [
-        ('new', 'New'),
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('canceled', 'Canceled'),
-    ]
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    service = models.CharField(max_length=100)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
-    cost = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def __str__(self):
-        return f'Order {self.id} by {self.user.username}'
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -112,8 +95,39 @@ class CartItem(models.Model):
             return self.quantity * self.service.price
         return 0
     
+class Order(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+        ('canceled', 'Canceled'),
+    ]
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f'Order {self.id} by {self.user.username}'
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, null=True, blank=True)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)
+    quantity = models.PositiveIntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def clean(self):
+        if self.car and self.service:
+            raise ValidationError('OrderItem cannot have both car and service.')
+        if not self.car and not self.service:
+            raise ValidationError('OrderItem must have either car or service.')
+
+admin.site.register(Order)
 admin.site.register(Blog) 
 admin.site.register(Car)
 admin.site.register(Service)
 admin.site.register(ServiceType)
+admin.site.register(UserProfile)
+admin.site.register(OrderItem)

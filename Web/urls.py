@@ -48,6 +48,11 @@ urlpatterns = [
     path('catalog/services/', views.service_list, name='service_list'),
     path('catalog/services/<int:service_id>/', views.service_detail, name='service_detail'),
     path('remove_from_cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('order_history/', views.order_history, name='order_history'),
+    path('order_detail/<int:order_id>/', views.order_detail, name='order_detail'),
+    path('place_order/', views.place_order, name='place_order'),
+    path('newservice/', views.newservice, name='newservice'),
+    path('car/<int:car_id>/edit/', views.edit_car, name='edit_car'),
     
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
